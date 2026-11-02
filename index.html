@@ -34,7 +34,7 @@
     <header><div class="brand">Skade<em>generator</em></div><div class="status">SYSTEM // RNG-01<br><b>● KLAR</b><br>FOR FIKSJON &amp; SPILL</div></header>
     <main>
       <section class="card controls" aria-label="Innstillinger">
-        <div class="eyebrow">01 / Konfigurer hendelsen</div>
+        <div class="eyebrow">01 / Still inn hendelsen</div>
         <div class="field"><label for="location">Treffområde <span>VALGFRITT</span></label><select id="location"><option value="random">Tilfeldig område</option><option value="torso">Overkropp</option><option value="arm">Arm / skulder</option><option value="leg">Bein / hofte</option><option value="head">Hode / hals</option></select></div>
         <div class="field"><label>Ønsket intensitet <span>VEKTING</span></label><div class="severity"><input id="low" name="severity" type="radio" value="low"><label for="low">Lav</label><input id="mixed" name="severity" type="radio" value="mixed" checked><label for="mixed">Blandet</label><input id="high" name="severity" type="radio" value="high"><label for="high">Høy</label></div></div>
         <button class="roll" id="roll">Generer skadeomfang<small>TRYKK MELLOMROM FOR HURTIGTREKK</small></button>
@@ -50,21 +50,21 @@
   <script>
     const outcomes={
       torso:[
-        {s:1,n:'Overfladisk streif',d:'Prosjektilet streifer utsiden. Figuren er medtatt, men kan fortsatt bevege seg og handle.',e:'Kortvarig sjokk'},
+        {s:1,n:'Overfladisk streif',d:'Prosjektilet streifer utsiden. Den skadde er medtatt, men kan fortsatt bevege seg og handle.',e:'Kortvarig sjokk'},
         {s:2,n:'Gjennomgående treff',d:'Et rent treff med tydelig blodtap. Bevegelse er mulig, men alle handlinger blir krevende.',e:'Redusert kapasitet'},
-        {s:3,n:'Alvorlig brystskade',d:'Treffet slår luften ut av figuren og krever øyeblikkelig hjelp i scenen.',e:'Kritisk tilstand'}],
+        {s:3,n:'Alvorlig brystskade',d:'Treffet slår luften ut av den skadde og krever øyeblikkelig hjelp i scenen.',e:'Kritisk tilstand'}],
       arm:[
         {s:1,n:'Streif i overarm',d:'En smertefull rift gjør grepet usikkert, men armen er fortsatt brukbar.',e:'Svakere grep'},
         {s:2,n:'Skulder ute av spill',d:'Treffet gjør at armen ikke kan brukes effektivt resten av scenen.',e:'Én arm ute'},
-        {s:3,n:'Knust overarm',d:'En alvorlig skade med kraftig smerte og blodtap. Figuren må raskt i dekning.',e:'Kritisk skade'}],
+        {s:3,n:'Knust overarm',d:'En alvorlig skade med kraftig smerte og blodtap. Den skadde må raskt i dekning.',e:'Kritisk skade'}],
       leg:[
         {s:1,n:'Streif i lår',d:'Beinet holder, men hvert steg gjør vondt og tempoet faller.',e:'Halvert fart'},
-        {s:2,n:'Kne slått ut',d:'Figuren går i bakken og kan bare forflytte seg langsomt uten støtte.',e:'Kan ikke løpe'},
+        {s:2,n:'Kne slått ut',d:'Den skadde går i bakken og kan bare forflytte seg langsomt uten støtte.',e:'Kan ikke løpe'},
         {s:3,n:'Alvorlig lårskade',d:'Treffet gir raskt blodtap og gjør stående bevegelse umulig.',e:'Kritisk tilstand'}],
       head:[
         {s:1,n:'Streif ved tinningen',d:'Et glansende treff gir desorientering, øresus og uklart syn.',e:'Desorientert'},
-        {s:2,n:'Kraftig hjernerystelse',d:'Figuren mister oversikt og faller. Kommunikasjon og handling blir svært vanskelig.',e:'Ute av kamp'},
-        {s:3,n:'Kritisk hodetreff',d:'Et livstruende treff. Figuren er umiddelbart ute av handling og trenger akutt hjelp.',e:'Livstruende'}]
+        {s:2,n:'Kraftig hjernerystelse',d:'Den skadde mister oversikt og faller. Kommunikasjon og handling blir svært vanskelig.',e:'Ute av kamp'},
+        {s:3,n:'Kritisk hodetreff',d:'Et livstruende treff. Den skadde er umiddelbart ute av handling og trenger akutt hjelp.',e:'Livstruende'}]
     };
     const names={torso:'Overkropp',arm:'Arm / skulder',leg:'Bein / hofte',head:'Hode / hals'};let log=[];
     function pick(){const chosen=document.querySelector('input[name="severity"]:checked').value;let area=document.querySelector('#location').value;if(area==='random'){const a=Object.keys(outcomes);area=a[Math.floor(Math.random()*a.length)]}const weights=chosen==='low'?[.68,.27,.05]:chosen==='high'?[.08,.37,.55]:[.34,.43,.23];let r=Math.random(),idx=r<weights[0]?0:r<weights[0]+weights[1]?1:2;return{...outcomes[area][idx],area,roll:Math.floor(Math.random()*100)+1}}
