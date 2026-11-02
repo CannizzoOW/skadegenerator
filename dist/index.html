@@ -22,22 +22,22 @@
     select{width:100%;appearance:none;background:#0b0e0f;color:var(--ink);border:1px solid #394247;border-radius:0;padding:14px;font:500 .9rem "IBM Plex Mono";outline:none}select:focus{border-color:var(--acid)}
     .severity{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.severity input{position:absolute;opacity:0}.severity label{cursor:pointer;text-align:center;border:1px solid #394247;padding:12px 5px;color:var(--muted);font:700 .9rem "Barlow Condensed";text-transform:uppercase}.severity input:checked+label{background:var(--acid);border-color:var(--acid);color:#0b0d0f}
     button{border:0;cursor:pointer}.roll{position:relative;overflow:hidden;background:var(--signal);color:#0a0b0c;padding:20px;font:800 1.55rem "Barlow Condensed";letter-spacing:.04em;text-transform:uppercase;transition:transform .15s,filter .15s}.roll:hover{filter:brightness(1.1)}.roll:active{transform:translateY(2px)}.roll small{font:500 .68rem "IBM Plex Mono";display:block;margin-top:4px;letter-spacing:0}
-    .result{min-height:430px;padding:22px;display:flex;flex-direction:column}.result.empty{justify-content:center}.result.empty .output{display:none}.crosshair{width:74px;height:74px;border:1px solid #3a4347;border-radius:50%;margin:0 auto 18px;position:relative}.crosshair:before,.crosshair:after{content:"";position:absolute;background:#3a4347}.crosshair:before{height:1px;width:100px;left:-14px;top:36px}.crosshair:after{width:1px;height:100px;top:-14px;left:36px}.empty-copy{text-align:center;color:var(--muted);font-size:.78rem;line-height:1.7}
+    .result{min-height:430px;padding:22px 32px 22px 22px;display:flex;flex-direction:column}.result.empty{justify-content:center}.result.empty .output{display:none}.crosshair{width:74px;height:74px;border:1px solid #3a4347;border-radius:50%;margin:0 auto 18px;position:relative}.crosshair:before,.crosshair:after{content:"";position:absolute;background:#3a4347}.crosshair:before{height:1px;width:100px;left:-14px;top:36px}.crosshair:after{width:1px;height:100px;top:-14px;left:36px}.empty-copy{text-align:center;color:var(--muted);font-size:.78rem;line-height:1.7}
     .output{height:100%;display:flex;flex-direction:column}.result-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:13px}.tag{font-size:.67rem;color:var(--acid);letter-spacing:.12em}.dice{color:var(--muted);font-size:.68rem}.injury{font:800 clamp(2.25rem,5vw,4.2rem)/.92 "Barlow Condensed";text-transform:uppercase;margin:28px 0 16px;max-width:12ch}.desc{color:#bdc4c6;font-size:.83rem;line-height:1.7;margin:0}.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px 8px;margin-top:auto;padding-top:28px}.meta div{border-left:2px solid var(--signal);padding-left:9px;min-width:0}.meta .wide{grid-column:1/-1}.meta small{display:block;color:var(--muted);font-size:.6rem;text-transform:uppercase;margin-bottom:5px}.meta strong{display:block;font:700 1rem "Barlow Condensed";text-transform:uppercase}.vital-state{color:var(--acid);font:500 .59rem "IBM Plex Mono";letter-spacing:.08em}.vital-state.low{color:#63b7ff}.vital-state.high{color:var(--signal)}.reroll{margin-top:12px;background:transparent;border:1px solid #394247;color:var(--muted);padding:11px;font:600 .75rem "IBM Plex Mono"}.reroll:hover{color:var(--ink);border-color:var(--ink)}
     .history{grid-column:1/-1;padding:18px 22px}.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.clear{background:none;color:var(--muted);font:500 .66rem "IBM Plex Mono"}.history-list{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.chip{white-space:nowrap;border:1px solid var(--line);padding:9px 11px;font-size:.66rem;color:#b8c0c2}.chip b{color:var(--signal);margin-right:6px}
     footer{margin-top:22px;display:flex;justify-content:space-between;gap:20px;color:#667074;font-size:.62rem;line-height:1.6}.shake{animation:shake .34s ease}@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
-    @media(max-width:750px){header{margin-bottom:28px}.status{display:none}main{grid-template-columns:1fr}.result{min-height:390px}.history{grid-column:auto}.shell{width:min(100% - 20px,620px)}}
+    @media(max-width:750px){header{margin-bottom:28px}.status{display:none}main{grid-template-columns:1fr}.result{min-height:390px;padding-right:26px}.history{grid-column:auto}.shell{width:min(100% - 20px,620px)}}
   </style>
 </head>
 <body>
   <div class="shell">
-    <header><div class="brand">Skade<em>generator</em></div><div class="status">SYSTEM // RNG-01<br><b>● KLAR</b><br>FOR FIKSJON &amp; SPILL</div></header>
+    <header><div class="brand">Skade<em>generator</em></div></header>
     <main>
       <section class="card controls" aria-label="Innstillinger">
         <div class="eyebrow">01 / Still inn hendelsen</div>
         <div class="field"><label for="location">Treffområde <span>VALGFRITT</span></label><select id="location"><option value="random">Tilfeldig område</option><option value="torso">Overkropp</option><option value="arm">Arm / skulder</option><option value="leg">Bein / hofte</option><option value="head">Hode / hals</option></select></div>
         <div class="field"><label>Ønsket intensitet <span>VEKTING</span></label><div class="severity"><input id="low" name="severity" type="radio" value="low"><label for="low">Lav</label><input id="mixed" name="severity" type="radio" value="mixed" checked><label for="mixed">Blandet</label><input id="high" name="severity" type="radio" value="high"><label for="high">Høy</label></div></div>
-        <button class="roll" id="roll">Generer skadeomfang<small>TRYKK MELLOMROM FOR HURTIGTREKK</small></button>
+        <button class="roll" id="roll">Generer skadeomfang<small>ELLER TRYKK MELLOMROM</small></button>
       </section>
       <section class="card result empty" id="result" aria-live="polite">
         <div class="placeholder"><div class="crosshair"></div><div class="empty-copy">Ingen hendelse generert.<br>Velg innstillinger og start trekket.</div></div>
@@ -45,7 +45,7 @@
       </section>
       <section class="card history"><div class="history-head"><span class="eyebrow">Siste utfall</span><button class="clear" id="clear">TØM LOGG</button></div><div class="history-list" id="history"><span class="chip">Ingen historikk ennå</span></div></section>
     </main>
-    <footer><span>Et fortellerverktøy med tilfeldige, fiktive utfall.</span><span>Ikke ment som medisinsk vurdering eller veiledning.</span></footer>
+    <footer><span>Et fortellerverktøy med tilfeldige, fiktive utfall.</span><span>Ikke ment som medisinsk vurdering eller veiledning.<span>(C) Cannizzo</span></span></footer>
   </div>
   <script>
     const outcomes={
