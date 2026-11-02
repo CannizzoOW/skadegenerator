@@ -15,7 +15,7 @@
     body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.2;background-image:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);background-size:100% 4px;mix-blend-mode:overlay}
     .shell{width:min(1120px,calc(100% - 32px));margin:auto;padding:28px 0 42px}
     header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;border-top:2px solid var(--ink);padding-top:14px;margin-bottom:48px}
-    .brand{font:800 clamp(2.8rem,8vw,6.5rem)/.78 "Barlow Condensed",sans-serif;letter-spacing:-.035em;text-transform:uppercase}.brand em{display:block;color:var(--signal);font-style:normal}
+    .brand{font:800 clamp(2.8rem,8vw,6.5rem)/.78 "Barlow Condensed",sans-serif;letter-spacing:-.035em;text-transform:uppercase}.brand em{display:block;color:var(--signal);font-style:normal}.subtitle{margin-top:18px;color:var(--muted);font:600 .72rem "IBM Plex Mono";letter-spacing:.15em;text-transform:uppercase}.subtitle b{color:var(--acid);font-weight:600}
     .status{font-size:.72rem;color:var(--muted);text-align:right;line-height:1.7}.status b{color:var(--acid);font-weight:500}
     main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:18px}.card{background:rgba(17,21,23,.9);border:1px solid var(--line);box-shadow:0 22px 70px #0007}
     .controls{padding:22px;display:grid;gap:24px}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}.field label{display:flex;justify-content:space-between;font:700 1.15rem "Barlow Condensed",sans-serif;text-transform:uppercase;margin-bottom:11px}.field label span{color:var(--acid);font-family:"IBM Plex Mono";font-size:.8rem}
@@ -31,7 +31,7 @@
 </head>
 <body>
   <div class="shell">
-    <header><div class="brand">Skade<em>generator</em></div><div class="status">SYSTEM // RNG-01<br><b>● KLAR</b><br>FOR FIKSJON &amp; SPILL</div></header>
+    <header><div><div class="brand">Skade<em>generator</em></div><div class="subtitle"><b>P/P</b> — Pust og puls</div></div><div class="status">SYSTEM // RNG-01<br><b>● KLAR</b><br>FOR FIKSJON &amp; SPILL</div></header>
     <main>
       <section class="card controls" aria-label="Innstillinger">
         <div class="eyebrow">01 / Still inn hendelsen</div>
