@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d0f">
+  <meta name="description" content="Tilfeldig skadegenerator for spill og rollespill.">
+  <title>Skadegenerator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#090b0c;--panel:#111517;--line:#293034;--ink:#f2f1e9;--muted:#8f999d;--signal:#ff5b36;--acid:#c8ff3d;--safe:#5dd39e}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 10%,#20272a 0,transparent 26%),linear-gradient(145deg,#080a0b,#101416 55%,#080a0b);color:var(--ink);font-family:"IBM Plex Mono",monospace}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.2;background-image:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);background-size:100% 4px;mix-blend-mode:overlay}
+    .shell{width:min(1120px,calc(100% - 32px));margin:auto;padding:28px 0 42px}
+    header{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;border-top:2px solid var(--ink);padding-top:14px;margin-bottom:48px}
+    .brand{font:800 clamp(2.8rem,8vw,6.5rem)/.78 "Barlow Condensed",sans-serif;letter-spacing:-.035em;text-transform:uppercase}.brand em{display:block;color:var(--signal);font-style:normal}
+    .status{font-size:.72rem;color:var(--muted);text-align:right;line-height:1.7}.status b{color:var(--acid);font-weight:500}
+    main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:18px}.card{background:rgba(17,21,23,.9);border:1px solid var(--line);box-shadow:0 22px 70px #0007}
+    .controls{padding:22px;display:grid;gap:24px}.eyebrow{font-size:.68rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}.field label{display:flex;justify-content:space-between;font:700 1.15rem "Barlow Condensed",sans-serif;text-transform:uppercase;margin-bottom:11px}.field label span{color:var(--acid);font-family:"IBM Plex Mono";font-size:.8rem}
+    select{width:100%;appearance:none;background:#0b0e0f;color:var(--ink);border:1px solid #394247;border-radius:0;padding:14px;font:500 .9rem "IBM Plex Mono";outline:none}select:focus{border-color:var(--acid)}
+    .severity{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.severity input{position:absolute;opacity:0}.severity label{cursor:pointer;text-align:center;border:1px solid #394247;padding:12px 5px;color:var(--muted);font:700 .9rem "Barlow Condensed";text-transform:uppercase}.severity input:checked+label{background:var(--acid);border-color:var(--acid);color:#0b0d0f}
+    button{border:0;cursor:pointer}.roll{position:relative;overflow:hidden;background:var(--signal);color:#0a0b0c;padding:20px;font:800 1.55rem "Barlow Condensed";letter-spacing:.04em;text-transform:uppercase;transition:transform .15s,filter .15s}.roll:hover{filter:brightness(1.1)}.roll:active{transform:translateY(2px)}.roll small{font:500 .68rem "IBM Plex Mono";display:block;margin-top:4px;letter-spacing:0}
+    .result{min-height:430px;padding:22px;display:flex;flex-direction:column}.result.empty{justify-content:center}.result.empty .output{display:none}.crosshair{width:74px;height:74px;border:1px solid #3a4347;border-radius:50%;margin:0 auto 18px;position:relative}.crosshair:before,.crosshair:after{content:"";position:absolute;background:#3a4347}.crosshair:before{height:1px;width:100px;left:-14px;top:36px}.crosshair:after{width:1px;height:100px;top:-14px;left:36px}.empty-copy{text-align:center;color:var(--muted);font-size:.78rem;line-height:1.7}
+    .output{height:100%;display:flex;flex-direction:column}.result-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:13px}.tag{font-size:.67rem;color:var(--acid);letter-spacing:.12em}.dice{color:var(--muted);font-size:.68rem}.injury{font:800 clamp(2.25rem,5vw,4.2rem)/.92 "Barlow Condensed";text-transform:uppercase;margin:28px 0 16px;max-width:12ch}.desc{color:#bdc4c6;font-size:.83rem;line-height:1.7;margin:0}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto;padding-top:28px}.meta div{border-left:2px solid var(--signal);padding-left:9px}.meta small{display:block;color:var(--muted);font-size:.6rem;text-transform:uppercase;margin-bottom:5px}.meta strong{font:700 1rem "Barlow Condensed";text-transform:uppercase}.reroll{margin-top:12px;background:transparent;border:1px solid #394247;color:var(--muted);padding:11px;font:600 .75rem "IBM Plex Mono"}.reroll:hover{color:var(--ink);border-color:var(--ink)}
+    .history{grid-column:1/-1;padding:18px 22px}.history-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.clear{background:none;color:var(--muted);font:500 .66rem "IBM Plex Mono"}.history-list{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.chip{white-space:nowrap;border:1px solid var(--line);padding:9px 11px;font-size:.66rem;color:#b8c0c2}.chip b{color:var(--signal);margin-right:6px}
+    footer{margin-top:22px;display:flex;justify-content:space-between;gap:20px;color:#667074;font-size:.62rem;line-height:1.6}.shake{animation:shake .34s ease}@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+    @media(max-width:750px){header{margin-bottom:28px}.status{display:none}main{grid-template-columns:1fr}.result{min-height:390px}.history{grid-column:auto}.shell{width:min(100% - 20px,620px)}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><div class="brand">Skade<em>generator</em></div><div class="status">SYSTEM // RNG-01<br><b>● KLAR</b><br>FOR FIKSJON &amp; SPILL</div></header>
+    <main>
+      <section class="card controls" aria-label="Innstillinger">
+        <div class="eyebrow">01 / Konfigurer hendelsen</div>
+        <div class="field"><label for="location">Treffområde <span>VALGFRITT</span></label><select id="location"><option value="random">Tilfeldig område</option><option value="torso">Overkropp</option><option value="arm">Arm / skulder</option><option value="leg">Bein / hofte</option><option value="head">Hode / hals</option></select></div>
+        <div class="field"><label>Ønsket intensitet <span>VEKTING</span></label><div class="severity"><input id="low" name="severity" type="radio" value="low"><label for="low">Lav</label><input id="mixed" name="severity" type="radio" value="mixed" checked><label for="mixed">Blandet</label><input id="high" name="severity" type="radio" value="high"><label for="high">Høy</label></div></div>
+        <button class="roll" id="roll">Generer skadeomfang<small>TRYKK MELLOMROM FOR HURTIGTREKK</small></button>
+      </section>
+      <section class="card result empty" id="result" aria-live="polite">
+        <div class="placeholder"><div class="crosshair"></div><div class="empty-copy">Ingen hendelse generert.<br>Velg innstillinger og start trekket.</div></div>
+        <div class="output"><div class="result-head"><span class="tag" id="tag">UTFALL</span><span class="dice" id="dice">D100 // 00</span></div><h1 class="injury" id="injury"></h1><p class="desc" id="desc"></p><div class="meta"><div><small>Område</small><strong id="area"></strong></div><div><small>Konsekvens</small><strong id="effect"></strong></div></div><button class="reroll" id="reroll">↻ TREKK PÅ NYTT</button></div>
+      </section>
+      <section class="card history"><div class="history-head"><span class="eyebrow">Siste utfall</span><button class="clear" id="clear">TØM LOGG</button></div><div class="history-list" id="history"><span class="chip">Ingen historikk ennå</span></div></section>
+    </main>
+    <footer><span>Et fortellerverktøy med tilfeldige, fiktive utfall.</span><span>Ikke ment som medisinsk vurdering eller veiledning.</span></footer>
+  </div>
+  <script>
+    const outcomes={
+      torso:[
+        {s:1,n:'Overfladisk streif',d:'Prosjektilet streifer utsiden. Figuren er medtatt, men kan fortsatt bevege seg og handle.',e:'Kortvarig sjokk'},
+        {s:2,n:'Gjennomgående treff',d:'Et rent treff med tydelig blodtap. Bevegelse er mulig, men alle handlinger blir krevende.',e:'Redusert kapasitet'},
+        {s:3,n:'Alvorlig brystskade',d:'Treffet slår luften ut av figuren og krever øyeblikkelig hjelp i scenen.',e:'Kritisk tilstand'}],
+      arm:[
+        {s:1,n:'Streif i overarm',d:'En smertefull rift gjør grepet usikkert, men armen er fortsatt brukbar.',e:'Svakere grep'},
+        {s:2,n:'Skulder ute av spill',d:'Treffet gjør at armen ikke kan brukes effektivt resten av scenen.',e:'Én arm ute'},
+        {s:3,n:'Knust overarm',d:'En alvorlig skade med kraftig smerte og blodtap. Figuren må raskt i dekning.',e:'Kritisk skade'}],
+      leg:[
+        {s:1,n:'Streif i lår',d:'Beinet holder, men hvert steg gjør vondt og tempoet faller.',e:'Halvert fart'},
+        {s:2,n:'Kne slått ut',d:'Figuren går i bakken og kan bare forflytte seg langsomt uten støtte.',e:'Kan ikke løpe'},
+        {s:3,n:'Alvorlig lårskade',d:'Treffet gir raskt blodtap og gjør stående bevegelse umulig.',e:'Kritisk tilstand'}],
+      head:[
+        {s:1,n:'Streif ved tinningen',d:'Et glansende treff gir desorientering, øresus og uklart syn.',e:'Desorientert'},
+        {s:2,n:'Kraftig hjernerystelse',d:'Figuren mister oversikt og faller. Kommunikasjon og handling blir svært vanskelig.',e:'Ute av kamp'},
+        {s:3,n:'Kritisk hodetreff',d:'Et livstruende treff. Figuren er umiddelbart ute av handling og trenger akutt hjelp.',e:'Livstruende'}]
+    };
+    const names={torso:'Overkropp',arm:'Arm / skulder',leg:'Bein / hofte',head:'Hode / hals'};let log=[];
+    function pick(){const chosen=document.querySelector('input[name="severity"]:checked').value;let area=document.querySelector('#location').value;if(area==='random'){const a=Object.keys(outcomes);area=a[Math.floor(Math.random()*a.length)]}const weights=chosen==='low'?[.68,.27,.05]:chosen==='high'?[.08,.37,.55]:[.34,.43,.23];let r=Math.random(),idx=r<weights[0]?0:r<weights[0]+weights[1]?1:2;return{...outcomes[area][idx],area,roll:Math.floor(Math.random()*100)+1}}
+    function generate(){const o=pick(),box=document.querySelector('#result');box.classList.remove('empty','shake');void box.offsetWidth;box.classList.add('shake');document.querySelector('#injury').textContent=o.n;document.querySelector('#desc').textContent=o.d;document.querySelector('#area').textContent=names[o.area];document.querySelector('#effect').textContent=o.e;document.querySelector('#dice').textContent=`D100 // ${String(o.roll).padStart(2,'0')}`;document.querySelector('#tag').textContent=['LAVT OMFANG','ALVORLIG','KRITISK'][o.s-1];log.unshift(o);log=log.slice(0,8);renderLog()}
+    function renderLog(){const el=document.querySelector('#history');el.innerHTML=log.length?log.map((x,i)=>`<span class="chip"><b>${String(i+1).padStart(2,'0')}</b>${x.n} · ${names[x.area]}</span>`).join(''):'<span class="chip">Ingen historikk ennå</span>'}
+    document.querySelector('#roll').onclick=generate;document.querySelector('#reroll').onclick=generate;document.querySelector('#clear').onclick=()=>{log=[];renderLog()};document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['SELECT','INPUT'].includes(document.activeElement.tagName)){e.preventDefault();generate()}});
+  </script>
+</body>
+</html>
