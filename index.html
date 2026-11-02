@@ -49,28 +49,65 @@
   </div>
   <script>
     const outcomes={
-      torso:[
-        {s:1,n:'Overfladisk streif',d:'Prosjektilet streifer utsiden. Den skadde er medtatt, men kan fortsatt bevege seg og handle.',e:'Kortvarig sjokk'},
-        {s:2,n:'Gjennomgående treff',d:'Et rent treff med tydelig blodtap. Bevegelse er mulig, men alle handlinger blir krevende.',e:'Redusert kapasitet'},
-        {s:3,n:'Alvorlig brystskade',d:'Treffet slår luften ut av den skadde og krever øyeblikkelig hjelp i scenen.',e:'Kritisk tilstand'}],
-      arm:[
-        {s:1,n:'Streif i overarm',d:'En smertefull rift gjør grepet usikkert, men armen er fortsatt brukbar.',e:'Svakere grep'},
-        {s:2,n:'Skulder ute av spill',d:'Treffet gjør at armen ikke kan brukes effektivt resten av scenen.',e:'Én arm ute'},
-        {s:3,n:'Knust overarm',d:'En alvorlig skade med kraftig smerte og blodtap. Den skadde må raskt i dekning.',e:'Kritisk skade'}],
-      leg:[
-        {s:1,n:'Streif i lår',d:'Beinet holder, men hvert steg gjør vondt og tempoet faller.',e:'Halvert fart'},
-        {s:2,n:'Kne slått ut',d:'Den skadde går i bakken og kan bare forflytte seg langsomt uten støtte.',e:'Kan ikke løpe'},
-        {s:3,n:'Alvorlig lårskade',d:'Treffet gir raskt blodtap og gjør stående bevegelse umulig.',e:'Kritisk tilstand'}],
-      head:[
-        {s:1,n:'Streif ved tinningen',d:'Et glansende treff gir desorientering, øresus og uklart syn.',e:'Desorientert'},
-        {s:2,n:'Kraftig hjernerystelse',d:'Den skadde mister oversikt og faller. Kommunikasjon og handling blir svært vanskelig.',e:'Ute av kamp'},
-        {s:3,n:'Kritisk hodetreff',d:'Et livstruende treff. Den skadde er umiddelbart ute av handling og trenger akutt hjelp.',e:'Livstruende'}]
+            torso: [
+        { s: 1, n: 'Overfladisk streif', d: 'Prosjektilet streifer utsiden. Den skadde er medtatt, men kan fortsatt bevege seg og handle.', e: 'Kortvarig sjokk' },
+        { s: 1, n: 'Streif langs ribbeina', d: 'Det svir i siden når den skadde vrir seg. For å se bak seg må den skadde snu hele kroppen.', e: 'Begrenset vridning' },
+        { s: 1, n: 'Streif over skulderbladet', d: 'Sekken eller vesten gnisser mot såret for hvert steg. Den skadde løfter den ene skulderen for å avlaste området.', e: 'Ubehag ved bevegelse' },
+
+        { s: 2, n: 'Gjennomgående treff', d: 'Et rent treff med tydelig blodtap. Bevegelse er mulig, men alle handlinger blir krevende.', e: 'Redusert kapasitet' },
+        { s: 2, n: 'Treff i flanken', d: 'Den skadde presser en hånd mot siden. For å bruke begge hender må grepet om såret slippes.', e: 'Én hånd opptatt' },
+        { s: 2, n: 'Treff nederst i ryggen', d: 'Den skadde kommer seg i dekning på egen hånd, men må gripe tak i noe for å reise seg fra bakken igjen.', e: 'Trenger støtte for å reise seg' },
+
+        { s: 3, n: 'Alvorlig brystskade', d: 'Treffet slår luften ut av den skadde og krever øyeblikkelig hjelp i scenen.', e: 'Kritisk tilstand' },
+        { s: 3, n: 'Alvorlig buktreff', d: 'Den skadde synker sammen med armene rundt magen. På spørsmål om hva som har skjedd, kommer bare noen få ord om gangen.', e: 'Kan ikke forflytte seg selv' },
+        { s: 3, n: 'Brysttreff med pustevansker', d: 'Den skadde blir sittende foroverlent og kjemper for hvert åndedrag. Et forsøk på å rope etter hjelp blir til et svakt gisp.', e: 'Klarer ikke å rope' }],
+
+      arm: [
+        { s: 1, n: 'Streif i overarm', d: 'En smertefull rift gjør grepet usikkert, men armen er fortsatt brukbar.', e: 'Svakere grep' },
+        { s: 1, n: 'Streif over håndryggen', d: 'Det svir når fingrene bøyes. Den skadde kan holde en radio, men fomler med små knapper og glidelåser.', e: 'Svekket finmotorikk' },
+        { s: 1, n: 'Streif ved albuen', d: 'Armen kan holdes tett inntil kroppen. Smerten hugger til når den skadde strekker seg etter noe.', e: 'Smerte ved utstrekking' },
+
+        { s: 2, n: 'Skulder ute av spill', d: 'Treffet gjør at armen ikke kan brukes effektivt resten av scenen.', e: 'Én arm ute' },
+        { s: 2, n: 'Treff i underarmen', d: 'Grepet svikter og det den skadde holder, faller i bakken. Utstyr må plukkes opp og håndteres med den andre hånden.', e: 'Mister grepet' },
+        { s: 2, n: 'Treff ved albueleddet', d: 'Den skadde holder armen bøyd inntil brystet. Et forsøk på å skyve opp en tung dør må avbrytes.', e: 'Kan ikke skyve eller løfte med armen' },
+
+        { s: 3, n: 'Knust overarm', d: 'En alvorlig skade med kraftig smerte og blodtap. Den skadde må raskt i dekning.', e: 'Kritisk skade' },
+        { s: 3, n: 'Dyp skade på innsiden av overarmen', d: 'Blodet trekker raskt gjennom ermet. Den skadde blir svimmel og må sette seg mens andre overtar det som skjer rundt dem.', e: 'Kraftig blodtap' },
+        { s: 3, n: 'Alvorlig håndskade', d: 'Den skadde klarer ikke å samle fingrene rundt noe. Selv små støt mot hånden gir så sterke smerter at den må skjermes mot kroppen.', e: 'Hånden ute av bruk' }],
+
+      leg: [
+        { s: 1, n: 'Streif i lår', d: 'Beinet holder, men hvert steg gjør vondt og tempoet faller.', e: 'Halvert fart' },
+        { s: 1, n: 'Streif i leggen', d: 'Den skadde kan gå på flat mark. I trapper må hvert trinn tas med det friske beinet først.', e: 'Langsom i trapper' },
+        { s: 1, n: 'Streif over kneet', d: 'Den skadde kan stå og gå, men avbryter bevegelsen idet det såre kneet møter bakken.', e: 'Kan ikke knele på skadet side' },
+
+        { s: 2, n: 'Kne slått ut', d: 'Den skadde går i bakken og kan bare forflytte seg langsomt uten støtte.', e: 'Kan ikke løpe' },
+        { s: 2, n: 'Treff ved ankelen', d: 'Ankelen gir etter når foten settes ned. Med en arm rundt skulderen til en annen kan den skadde hinke videre.', e: 'Trenger støtte for å gå' },
+        { s: 2, n: 'Treff gjennom foten', d: 'Den skadde trekker foten opp og mister balansen. Sittende går det fortsatt an å bruke radio og utstyr.', e: 'Kan ikke belaste foten' },
+
+        { s: 3, n: 'Alvorlig lårskade', d: 'Treffet gir raskt blodtap og gjør stående bevegelse umulig.', e: 'Kritisk tilstand' },
+        { s: 3, n: 'Knust leggbein', d: 'Beinet svikter under den skadde. Selv med noen å lene seg på er det umulig å ta et steg, og andre må stå for forflytningen.', e: 'Må bæres eller støttes på båre' },
+        { s: 3, n: 'Dypt treff høyt i låret', d: 'Den skadde forsøker å åle seg mot dekning, men kreftene svikter etter kort tid. Stemmen blir svakere mens blodet samler seg under beinet.', e: 'Raskt økende svakhet' }],
+
+      head: [
+        { s: 1, n: 'Streif ved tinningen', d: 'Et glansende treff gir desorientering, øresus og uklart syn.', e: 'Desorientert' },
+        { s: 1, n: 'Streif over øyenbrynet', d: 'Blod renner ned foran det ene øyet. Den skadde må stadig tørke det bort for å se hvem som nærmer seg.', e: 'Delvis hindret syn' },
+        { s: 1, n: 'Streif langs kinnet', d: 'Den skadde skvetter og tar seg til ansiktet. Det svir å åpne munnen, så svarene blir korte.', e: 'Smerte ved tale' },
+
+        { s: 2, n: 'Kraftig hjernerystelse', d: 'Den skadde mister oversikt og faller. Kommunikasjon og handling blir svært vanskelig.', e: 'Ute av kamp' },
+        { s: 2, n: 'Kjeveskade', d: 'Den skadde er våken og forstår spørsmål, men ordene er vanskelige å tyde over radioen. Nikk og håndtegn fungerer bedre.', e: 'Utydelig tale' },
+        { s: 2, n: 'Hodestøt etter streiftreff', d: 'Den skadde faller bakover og slår hodet i bakken. Like etter spør den skadde hva som skjedde, selv om noen nettopp har forklart det.', e: 'Hukommelsestap rundt hendelsen' },
+
+        { s: 3, n: 'Kritisk hodetreff', d: 'Et livstruende treff. Den skadde er umiddelbart ute av handling og trenger akutt hjelp.', e: 'Livstruende' },
+        { s: 3, n: 'Hodeskade med fallende bevissthet', d: 'Først svarer den skadde når noen sier navnet deres. Etter hvert må spørsmålet gjentas flere ganger før det kommer en reaksjon.', e: 'Stadig vanskeligere å få kontakt' },
+        { s: 3, n: 'Alvorlig ansiktsskade', d: 'Den skadde er ved bevissthet, men får ikke fram ord og strever med å puste. En hånd som griper etter sidemannen, er eneste tegn på at beskjeder blir oppfattet.', e: 'Pustevansker og ute av stand til å snakke' }]
     };
     const names={torso:'Overkropp',arm:'Arm / skulder',leg:'Bein / hofte',head:'Hode / hals'};let log=[];
-    const ranges={1:{state:'STABIL',className:'stable',breath:[12,18],pulse:[65,95]},2:{state:'HØY',className:'high',breath:[20,28],pulse:[100,130]},3:{state:'LAV',className:'low',breath:[6,11],pulse:[40,60]}};
+    const vitalProfiles={stable:{state:'STABIL',className:'stable',breath:[12,18],pulse:[65,95]},high:{state:'HØY',className:'high',breath:[20,28],pulse:[100,130]},low:{state:'LAV',className:'low',breath:[6,11],pulse:[38,60]}};
+    const vitalWeights={1:[['stable',.75],['high',.15],['low',.10]],2:[['high',.60],['low',.25],['stable',.15]],3:[['low',.75],['high',.25]]};
     const between=([min,max])=>Math.floor(Math.random()*(max-min+1))+min;
+    function pickVitals(severity){let roll=Math.random();for(const [profile,weight] of vitalWeights[severity]){roll-=weight;if(roll<=0)return vitalProfiles[profile]}return vitalProfiles.stable}
     function pick(){const chosen=document.querySelector('input[name="severity"]:checked').value;let area=document.querySelector('#location').value;if(area==='random'){const a=Object.keys(outcomes);area=a[Math.floor(Math.random()*a.length)]}const weights=chosen==='low'?[.68,.27,.05]:chosen==='high'?[.08,.37,.55]:[.34,.43,.23];let r=Math.random(),idx=r<weights[0]?0:r<weights[0]+weights[1]?1:2;return{...outcomes[area][idx],area,roll:Math.floor(Math.random()*100)+1}}
-    function generate(){const o=pick(),v=ranges[o.s],box=document.querySelector('#result');box.classList.remove('empty','shake');void box.offsetWidth;box.classList.add('shake');document.querySelector('#injury').textContent=o.n;document.querySelector('#desc').textContent=o.d;document.querySelector('#area').textContent=names[o.area];document.querySelector('#effect').textContent=o.e;document.querySelector('#breath').textContent=`${between(v.breath)} / MIN`;document.querySelector('#pulse').textContent=`${between(v.pulse)} BPM`;['breath-state','pulse-state'].forEach(id=>{const el=document.querySelector('#'+id);el.textContent=v.state;el.className='vital-state '+v.className});document.querySelector('#dice').textContent=`D100 // ${String(o.roll).padStart(2,'0')}`;document.querySelector('#tag').textContent=['LAVT OMFANG','ALVORLIG','KRITISK'][o.s-1];log.unshift(o);log=log.slice(0,8);renderLog()}
+    function generate(){const o=pick(),v=pickVitals(o.s),box=document.querySelector('#result');box.classList.remove('empty','shake');void box.offsetWidth;box.classList.add('shake');document.querySelector('#injury').textContent=o.n;document.querySelector('#desc').textContent=o.d;document.querySelector('#area').textContent=names[o.area];document.querySelector('#effect').textContent=o.e;document.querySelector('#breath').textContent=`${between(v.breath)} / MIN`;document.querySelector('#pulse').textContent=`${between(v.pulse)} BPM`;['breath-state','pulse-state'].forEach(id=>{const el=document.querySelector('#'+id);el.textContent=v.state;el.className='vital-state '+v.className});document.querySelector('#dice').textContent=`D100 // ${String(o.roll).padStart(2,'0')}`;document.querySelector('#tag').textContent=['LAVT OMFANG','ALVORLIG','KRITISK'][o.s-1];log.unshift(o);log=log.slice(0,8);renderLog()}
     function renderLog(){const el=document.querySelector('#history');el.innerHTML=log.length?log.map((x,i)=>`<span class="chip"><b>${String(i+1).padStart(2,'0')}</b>${x.n} · ${names[x.area]}</span>`).join(''):'<span class="chip">Ingen historikk ennå</span>'}
     document.querySelector('#roll').onclick=generate;document.querySelector('#reroll').onclick=generate;document.querySelector('#clear').onclick=()=>{log=[];renderLog()};document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['SELECT','INPUT'].includes(document.activeElement.tagName)){e.preventDefault();generate()}});
   </script>
